@@ -1,0 +1,16 @@
+﻿{
+  "name": "com.dyns.editorias",
+  "displayName": "Editorias",
+  "description": "Editorias is a collection of editor tools and utilities focused on the EditorGUILayout API wrapping/overloading for Unity.",
+  "version": "1.0.0",
+  "keywords": [
+    "editor",
+    "tools"
+  ],
+  "category": "library",
+  "dependencies": {},
+  "author": {
+    "name": "Dylan SCHUMACKER",
+    "url": "https://github.com/dynSR"
+  }
+}
