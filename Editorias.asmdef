@@ -1,0 +1,16 @@
+{
+    "name": "Editorias",
+    "rootNamespace": "Editorias",
+    "references": [
+        "GUID:3d0613eb1a80be64b970042f04081145"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
