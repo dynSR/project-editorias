@@ -1,4 +1,4 @@
-﻿namespace Editorias.Editor.Constants {
+﻿namespace Editorias {
     public static class EditorLimits {
         public const int MIN_SLIDER_VALUE = 1;
         public const int MAX_SLIDER_VALUE = 256;

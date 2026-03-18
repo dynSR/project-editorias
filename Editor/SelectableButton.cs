@@ -1,7 +1,6 @@
-﻿using Editorias.Editor.Constants;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Editorias.Editor {
+namespace Editorias {
     public class SelectableButton : IDrawable {
         public string Text { get; protected set; } = "Unassigned";
         public System.Action OnClick { get; set; } = delegate { };

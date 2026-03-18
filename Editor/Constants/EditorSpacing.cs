@@ -1,4 +1,4 @@
-﻿namespace Editorias.Editor.Constants {
+﻿namespace Editorias {
     public static class EditorSpacing {
         public const int SPACING_XS = 2;
         public const int SPACING_S = 4;

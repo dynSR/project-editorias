@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Utilitas;
 
-namespace Editorias.Editor.Constants {
+namespace Editorias {
     public static class EditorButtonColors {
         public static Color BackgroundLightThemeIdle => "#E4E4E4".HexToColor();
         public static Color BackgroundLightThemeFocus => "#BEBEBE".HexToColor();

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Editorias.Editor {
+namespace Editorias {
     public class Button : IDrawable {
         public string Text { get; protected set; } = "Unassigned";
         public System.Action OnClick { get; set; } = delegate { };

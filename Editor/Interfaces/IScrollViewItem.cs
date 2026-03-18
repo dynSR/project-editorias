@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Editorias.Editor {
-    public interface IScrollViewItem : IDrawable, ISelectable, IComparable {
-        string ID { get; }
+namespace Editorias {
+    public interface IScrollViewItem : IDrawable, IComparable {
+        string Guid { get; }
         string Name { get; }
 
         void Destroy();

@@ -4,23 +4,28 @@ using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editorias.Editor {
-    public class ListDrawer<TItem> : IDrawable where TItem : IScrollViewItem {
+namespace Editorias {
+    public class ListDrawer<TItem> : IDrawable where TItem : IScrollViewItem, ISelectable {
         public TItem[] Items { get; protected set; }
         public HashSet<TItem> SelectedItems { get; } = new();
 
         public System.Action OnRefreshButtonClicked = delegate { };
 
-        private readonly ScrollView<TItem> scrollView = new();
+        private readonly ScrollView scrollView = new();
 
         private readonly Button selectAllButton;
         private readonly Button unselectAllButton;
+        private readonly Button refreshListButton;
+
+        // TODO
+        // - Make Filter buttons
+        // - Make Sorting buttons
+        // - Add a search bar
 
         private LabelField itemsCountLabel;
         private LabelField selectedItemsCountLabel;
 
         private string GetTitle() => "Fonts in project";
-        private float GetMaxWidth() => 300;
 
         public ListDrawer() {
             selectAllButton = new Button.Builder()
@@ -31,6 +36,11 @@ namespace Editorias.Editor {
             unselectAllButton = new Button.Builder()
                 .WithText("None")
                 .WithAction(UnselectAllItems)
+                .Build();
+
+            refreshListButton = new Button.Builder()
+                .WithText("Refresh Fonts")
+                .WithAction(Refresh)
                 .Build();
         }
 
@@ -48,7 +58,10 @@ namespace Editorias.Editor {
         }
 
         public void Draw() {
-            using (new EditorGUILayout.VerticalScope(GUI.skin.box, GUILayout.MaxWidth(GetMaxWidth()))) {
+            using (new EditorGUILayout.VerticalScope(GUI.skin.box,
+                       GUILayout.MinWidth(EditorSizes.MIN_WIDTH),
+                       GUILayout.MaxWidth(EditorSizes.MAX_WIDTH)
+                   )) {
                 DrawTitle(GetTitle());
                 DrawControls();
                 EditorGUILayout.Separator();
@@ -67,13 +80,10 @@ namespace Editorias.Editor {
                 unselectAllButton.Draw();
             }
 
-            if (GUILayout.Button("Refresh Font List")) {
-                // Need to retrieve all items from repository on list drawer parent
-                Refresh();
-            }
+            refreshListButton.Draw();
         }
 
-        private void DrawListItems() => scrollView.DrawItems(Items);
+        private void DrawListItems() => scrollView.DrawItems(Items as IScrollViewItem[]);
 
         private void DrawStatus() {
             using (new EditorGUILayout.HorizontalScope()) {
@@ -84,40 +94,40 @@ namespace Editorias.Editor {
 
         public void SelectAllItems() {
             SelectedItems.Clear();
-            SelectedItems.AddRange(Items);
+            SelectedItems.UnionWith(Items);
             SelectedItems.ForEach(item => item.Select());
-            selectedItemsCountLabel.SetText($"{SelectedItems.Count} fonts selected.");
+            SetSelectedItemsCountLabelText();
         }
 
-        private void UnselectAllItems() {
+        public void UnselectAllItems() {
             for (int i = SelectedItems.Count - 1; i >= 0; i--) {
                 TItem item = SelectedItems.ElementAt(i);
                 item.Deselect();
             }
 
             SelectedItems.Clear();
-
-            selectedItemsCountLabel.SetText($"{SelectedItems.Count} fonts selected.");
+            SetSelectedItemsCountLabelText();
         }
 
-        private void Refresh() {
+        public void Refresh() {
             UnselectAllItems();
             OnRefreshButtonClicked?.Invoke();
         }
 
         private void UpdateSelection(ISelectable selectable) {
-            if (selectable.IsSelected) {
-                SelectedItems.Add((TItem)selectable);
-            } else {
-                SelectedItems.Remove((TItem)selectable);
-            }
+            if (selectable.IsSelected) SelectedItems.Add((TItem)selectable);
+            else SelectedItems.Remove((TItem)selectable);
 
-            selectedItemsCountLabel.SetText($"{SelectedItems.Count} fonts selected.");
+            SetSelectedItemsCountLabelText();
         }
+
+        private void SetSelectedItemsCountLabelText() =>
+            selectedItemsCountLabel.SetText($"{SelectedItems.Count} fonts selected.");
 
         public void Destroy() {
             selectAllButton.OnClick -= SelectAllItems;
             unselectAllButton.OnClick -= UnselectAllItems;
+            refreshListButton.OnClick -= Refresh;
 
             Items.ForEach(item => {
                 item.OnSelection -= UpdateSelection;

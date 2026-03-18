@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Editorias.Editor {
+namespace Editorias {
     public class LabelField : IDrawable {
         public string Text { get; protected set; } = "Unassigned";
 
