@@ -54,7 +54,7 @@ namespace Editorias {
                 .WithText($"{SelectedItems.Count} fonts selected.")
                 .Build();
 
-            Items.ForEach(item => item.OnSelection += UpdateSelection);
+            // Items.ForEach(item => item.OnSelection += UpdateSelection);
         }
 
         public void Draw() {
@@ -128,11 +128,6 @@ namespace Editorias {
             selectAllButton.OnClick -= SelectAllItems;
             unselectAllButton.OnClick -= UnselectAllItems;
             refreshListButton.OnClick -= Refresh;
-
-            Items.ForEach(item => {
-                item.OnSelection -= UpdateSelection;
-                item.Destroy();
-            });
         }
     }
 }
