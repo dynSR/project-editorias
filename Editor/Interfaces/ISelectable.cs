@@ -6,7 +6,5 @@
         void Toggle();
         void Select();
         void Deselect();
-
-        System.Action<ISelectable> OnSelection { get; set; }
     }
 }
