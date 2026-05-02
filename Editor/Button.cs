@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utilitas;
 
 namespace Editorias {
     public class Button : IDrawable {
@@ -11,6 +12,14 @@ namespace Editorias {
             if (GUILayout.Button(Text)) {
                 OnClick?.Invoke();
             }
+        }
+
+        public void SetText(string newText) {
+            if (newText.IsNullOrWhiteSpace()) {
+                Debug.LogWarning($"{nameof(newText)} parameter value is null or empty, be careful");
+            }
+
+            Text = newText;
         }
 
         public class Builder {
