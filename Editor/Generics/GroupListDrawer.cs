@@ -149,11 +149,11 @@ namespace Editorias {
         public TItem[] GetSelectedItems() => Items.Filter(item => item.IsSelected).ToArray();
 
         public void Destroy() {
-            refreshListButton.OnClick -= Refresh;
-            selectAllGroupsButton.OnClick -= SelectAllGroups;
-            deselectAllGroupsButton.OnClick -= DeselectAllGroups;
-            expandAllGroupsButton.OnClick -= ExpandAllGroups;
-            collapseAllGroupsButton.OnClick -= CollapseAllGroups;
+            refreshListButton.Destroy();
+            selectAllGroupsButton.Destroy();
+            deselectAllGroupsButton.Destroy();
+            expandAllGroupsButton.Destroy();
+            collapseAllGroupsButton.Destroy();
         }
     }
 }

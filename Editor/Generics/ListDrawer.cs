@@ -70,9 +70,7 @@ namespace Editorias {
             }
         }
 
-        private void DrawTitle(string title) {
-            EditorGUILayout.LabelField(title, EditorStyles.boldLabel);
-        }
+        private void DrawTitle(string title) { EditorGUILayout.LabelField(title, EditorStyles.boldLabel); }
 
         private void DrawControls() {
             using (new EditorGUILayout.HorizontalScope()) {
@@ -125,9 +123,9 @@ namespace Editorias {
             selectedItemsCountLabel.SetText($"{SelectedItems.Count} fonts selected.");
 
         public void Destroy() {
-            selectAllButton.OnClick -= SelectAllItems;
-            unselectAllButton.OnClick -= UnselectAllItems;
-            refreshListButton.OnClick -= Refresh;
+            selectAllButton.Destroy();
+            unselectAllButton.Destroy();
+            refreshListButton.Destroy();
         }
     }
 }

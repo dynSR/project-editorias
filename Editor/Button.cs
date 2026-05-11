@@ -4,13 +4,15 @@ using Utilitas;
 namespace Editorias {
     public class Button : IDrawable {
         public string Text { get; protected set; } = "Unassigned";
-        public System.Action OnClick { get; set; } = delegate { };
+
+        private System.Action onClick;
+        private System.Action onClickSubject;
 
         protected Button() { }
 
         public void Draw() {
             if (GUILayout.Button(Text)) {
-                OnClick?.Invoke();
+                onClick?.Invoke();
             }
         }
 
@@ -22,6 +24,8 @@ namespace Editorias {
             Text = newText;
         }
 
+        public void Destroy() { onClick -= onClickSubject; }
+
         public class Builder {
             private readonly Button button = new();
 
@@ -31,13 +35,12 @@ namespace Editorias {
             }
 
             public Builder WithAction(System.Action onClick) {
-                button.OnClick += onClick;
+                button.onClick += onClick;
+                button.onClickSubject = onClick;
                 return this;
             }
 
-            public Button Build() {
-                return button;
-            }
+            public Button Build() { return button; }
         }
     }
 }

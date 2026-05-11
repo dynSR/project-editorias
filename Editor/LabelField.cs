@@ -3,29 +3,37 @@ using UnityEngine;
 
 namespace Editorias {
     public class LabelField : IDrawable {
-        public string Text { get; protected set; } = "Unassigned";
+        private string text = "Unassigned";
+        private Color color = Color.white;
 
-        public void Draw() => EditorGUILayout.LabelField(Text);
+        protected LabelField() { }
 
-        public void Draw(TextAnchor textAnchor) => EditorGUILayout.LabelField(Text, new GUIStyle(GUI.skin.label) {
-            alignment = textAnchor
-        });
+        public void Draw() => EditorGUILayout.LabelField(text);
 
-        public void SetText(string value) {
-            Text = value;
+        public void Draw(TextAnchor textAnchor) {
+            GUI.color = color;
+            EditorGUILayout.LabelField(text, new GUIStyle(GUI.skin.label) {
+                alignment = textAnchor
+            });
+            GUI.color = Color.white;
         }
+
+        public void SetText(string value) { text = value; }
 
         public class Builder {
             private readonly LabelField labelField = new();
 
             public Builder WithText(string text) {
-                labelField.Text = text;
+                labelField.text = text;
                 return this;
             }
 
-            public LabelField Build() {
-                return labelField;
+            public Builder WithColor(Color color) {
+                labelField.color = color;
+                return this;
             }
+
+            public LabelField Build() { return labelField; }
         }
     }
 }
